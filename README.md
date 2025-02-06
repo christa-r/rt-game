@@ -310,7 +310,7 @@ function gameLoop(delta){
 Various functions (e.g., `play()`, `trial_init()`, `test_flash()`, `decision()`, `noresp()`, `wrongresp()`, `rightresp()`, `transition()`, `nextLevel()`) manage different phases of gameplay, such as updating positions, handling user responses, and transitioning between levels.
 
 **Helper Functions Summary**
-- `coinFlip(prob)`: Returns 1 with probability prob, otherwise returns 0.
+- `coinFlip(prob)`: This function returns `1` with probability `prob` and `0` otherwise. It is used to introduce randomness into the game (e.g., deciding which side to flash).
 - `contain(sprite, container)`: Keeps a sprite within the boundaries of a container.
 - `hitTestRectangle(r1, r2)`: Checks for collisions between two rectangular objects.
 - `randomInt(min, max)`: Generates a random integer between `min` and `max`.
