@@ -54,4 +54,4 @@ You should see output with the Heroku CLI version, confirming that it is install
 - Open your terminal (Command Prompt on Windows, Terminal on macOS/Linux).
 - Navigate to the folder where you want to store the project.
 - Run the command (replace the URL with your repository’s URL):
-git clone https://github.com/your-username/pixi-game.git
+`git clone https://github.com/your-username/pixi-game.git`
