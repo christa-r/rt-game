@@ -1,3 +1,5 @@
+<img src="https://www.bu.edu/autism/files/2022/03/GEODE_Final_Logo_FullColor.jpg" alt="GEODE Logo" width="300"/>
+
 ## **Create a GitHub Account**
 **1. Visit GitHub:**
 Go to https://github.com.
