@@ -164,8 +164,8 @@ window.onresize = resize;
 
 **Lines 42–51: Smoothie and Flash Stage Setup**
 
-- **Line 42:** Create a new PIXI container `(flashStage)` for elements that flash on the screen during gameplay.
-- **Lines 43–48:** Initialize Smoothie (an animation engine) that calls the `gameLoop` function at 50 frames per second. Smoothie ensures the game loop runs at a consistent speed.
+- **Line 42:** Creates a new PIXI container `(flashStage)` for elements that flash on the screen during gameplay.
+- **Lines 43–48:** Initializes Smoothie (an animation engine) that calls the `gameLoop` function at 50 frames per second. Smoothie ensures the game loop runs at a consistent speed.
 - **Lines 49–51:** Initializes empty arrays for explosion and level transition animations. These arrays will later be populated with image URLs used for animated effects.
 
 ```javascript
@@ -200,11 +200,9 @@ PIXI.loader
 
 **Lines 82–83: Additional Asset Preparation**
 
-These function calls prepare animation frames:
+These function calls prepare animation frames. In other words, they build arrays containing URLs to individual images that will be used to create frame-by-frame animations later in the game.
 - `addExplosionFrames()` populates the array of explosion animation frames.
 - `addLightSpeedFrames()` populates the array for level transition animations.
-
-In other words, they build arrays containing URLs to individual images that will be used to create frame-by-frame animations later in the game.
 
 ```javascript
 addExplosionFrames(); // Populate explosion frame URLs
@@ -251,10 +249,10 @@ Swal.fire({
 
 This function is called once all assets are loaded and is responsible for getting the game ready to run. It initializes data, sounds, UI elements, and starts the main loop.
 - **Lines 134–136:** Generates a unique user ID by combining two random base‑36 strings.
-- **Lines 138–141:** Sets up the `jsondata` object with the username, user input, and current time. This object is later converted to a JSON string and sent to the server '/rt_shank3' to record the session’s start.
+- **Lines 138–141:** Sets up the `jsondata` object with the username, user input, and current time.
 - **Lines 142–155:** Converts the `jsondata` object into a JSON string, sets the server endpoint `(/rt_shank3)`, and creates a CORS-enabled POST request. It verifies that the request is properly created, sets the request header to indicate JSON content, defines callbacks for handling both successful responses and errors, and finally sends the JSON data to the server.
 - **Lines 157–161:** Creates sound objects for positive `(goodsound)` and negative `(badsound)` feedback and initializes counters like `trialCounter` and `DestroyedAlienCounter` to zero.
-- **Lines 162–167:** Adds the `flashStage` to the main stage, sets the initial game state (`getHC'), and starts the Smoothie game loop.
+- **Lines 162–167:** Adds the `flashStage` to the main stage, sets the initial game state (`getHC`), and starts the Smoothie game loop.
 
 ```javascript
 - function setup() {
