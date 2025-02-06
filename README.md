@@ -81,3 +81,22 @@ git commit -am "make it better"
 ```bash
 git push heroku main
 ```
+## **Detailed Code Walkthrough**
+```javascript
+let Application = PIXI.Application,
+    Container = PIXI.Container,
+    loader = PIXI.loader,
+    resources = PIXI.loader.resources,
+    Graphics = PIXI.Graphics,
+    TextureCache = PIXI.utils.TextureCache,
+    Sprite = PIXI.Sprite,
+    Text = PIXI.Text,
+    TextStyle = PIXI.TextStyle;
+```
+
+**Lines 1–9:**
+These lines create shortcut variables for various PIXI.js classes and objects. For example:
+- `Application` is used to create the main PIXI application.
+- `Container` will be used to group display objects.
+- `loader` and `resources` help with asset loading.
+- `Graphics`, `Sprite`, `Text`, and `TextStyle` are used for drawing shapes and displaying images or text.
