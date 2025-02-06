@@ -54,7 +54,7 @@ heroku --version
 
 You should see output with the Heroku CLI version, confirming that it is installed.
 
-## **Download or Clone the Game Repository**
+## **Clone Your Repository and Deploy to Heroku Using Git**
 **1. Open your terminal** (Command Prompt on Windows, Terminal on macOS/Linux).
 
 **2. Log into Heroku:**
