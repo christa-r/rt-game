@@ -86,6 +86,7 @@ git push heroku main
 ## **Detailed Code Walkthrough**
 
 **Lines 1–9: PIXI.js Setup and Aliases**
+
 These lines create aliases for various PIXI.js classes and objects. For example:
 - `Application` is used to create the main PIXI application.
 - `Container` will be used to group display objects.
@@ -105,6 +106,7 @@ let Application = PIXI.Application,
 ```
 
 **Lines 11–16: Application Initialization**
+
 These lines create a new PIXI Application with antialiasing (smoother graphics), transparency, canvas dimensions (1000×600 pixels) and a resolution of 1.
 
 ```javascript
@@ -118,6 +120,7 @@ let app = new Application({
 ```
 
 **Lines 18–19: Attaching the PIXI Canvas to the HTML Document**
+
 These lines retrieve the HTML element with the ID `gameWindow` and append the PIXI canvas `(app.view)` to it so that the game renders on your webpage.
 
 ```javascript
@@ -126,6 +129,7 @@ gameWindow.appendChild(app.view);
 ```
 
 **Lines 21–22: Defining Size and Aspect Ratio for Resizing**
+
 An array `size` is defined to hold the width and height. The `ratio` variable stores the aspect ratio (width divided by height) for later use in resizing.
 
 ```javascript
@@ -134,6 +138,7 @@ var ratio = size[0] / size[1];
 ```
 
 **Lines 24–40: Responsive Resizing**
+
 - The `resize()` function calculates the appropriate canvas width `(w)` and height `(h)` based on the window dimensions to maintain the aspect ratio. This ensures the game always displays properly regardless of the screen size.
 - It then applies CSS styles (position, width, height, left, top) to the canvas.
 - Finally, `window.onresize` is set so that every time the window is resized, the canvas adjusts accordingly.
@@ -158,6 +163,7 @@ window.onresize = resize;
 ```
 
 **Lines 42–51: Smoothie and Flash Stage Setup**
+
 - **Line 42:** Create a new PIXI container `(flashStage)` for elements that flash on the screen during gameplay.
 - **Lines 43–48:** Initialize Smoothie (an animation engine) that calls the `gameLoop` function at 50 frames per second. Smoothie ensures the game loop runs at a consistent speed.
 - **Lines 49–51:** Initializes empty arrays for explosion and level transition animations. These arrays will later be populated with image URLs used for animated effects.
@@ -176,6 +182,7 @@ var LIGHTSPEED_FRAMES = []; // Frames for level transition animation
 ```
 
 **Lines 71–80: Asset Loading**
+
 This block preloads multiple assets (images and JSON files) required by the game. Once loading is complete, the `setup()` function is automatically called to initialize game objects.
 
 ```javascript
@@ -192,6 +199,7 @@ PIXI.loader
 ```
 
 **Lines 82–83: Additional Asset Preparation**
+
 These function calls prepare animation frames:
 - `addExplosionFrames()` populates the array of explosion animation frames.
 - `addLightSpeedFrames()` populates the array for level transition animations.
@@ -204,6 +212,7 @@ addLightSpeedFrames(); // Populate lightspeed frame URLs
 ```
 
 **Lines 85–120: Global Variables and Input Setup**
+
 Declares many global variables that will be used across different parts of the game.
 - Variables like `hero,` `aliens,` and `spaceBackground` will hold PIXI sprites and containers.
 The `keyboard()` function is called with key codes (65 for A, 68 for D, and 32 for Space) to set up event listeners for user input.
@@ -219,6 +228,7 @@ let spacebar = keyboard(32);
 ```
 
 **Lines 121–131: User Prompt with SweetAlert**
+
 Uses the SweetAlert library to display a modal dialog that prompts the user for an ID. The entered ID is stored in the `userinput` variable and may be used for user tracking or data export later.
 
 ```javascript
@@ -238,6 +248,7 @@ Swal.fire({
 ```
 
 **Lines 134–167: The `setup()` Function**
+
 This function is called once all assets are loaded and is responsible for getting the game ready to run. It initializes data, sounds, UI elements, and starts the main loop.
 - **Lines 134–136:** Generates a unique user ID by combining two random base‑36 strings.
 - **Lines 138–141:** Sets up the `jsondata` object with the username, user input, and current time. This object is later converted to a JSON string and sent to the server '/rt_shank3' to record the session’s start.
@@ -283,3 +294,27 @@ This function is called once all assets are loaded and is responsible for gettin
     smoothie.start();
 }
 ```
+
+**Game Loop Overview**
+
+- **Game Loop Function:**
+Called repeatedly by Smoothie at 50 FPS, this function updates the game by invoking the current state function (stored in `state`). The `delta` parameter helps ensure smooth animations.
+
+```javascript
+function gameLoop(delta){
+    state(delta);
+}
+```
+
+- **State Functions:**
+Various functions (e.g., `play()`, `trial_init()`, `test_flash()`, `decision()`, `noresp()`, `wrongresp()`, `rightresp()`, `transition()`, `nextLevel()`) manage different phases of gameplay, such as updating positions, handling user responses, and transitioning between levels.
+
+**Helper Functions Summary**
+- `coinFlip(prob)`: Returns 1 with probability prob, otherwise returns 0.
+- `contain(sprite, container)`: Keeps a sprite within the boundaries of a container.
+- `hitTestRectangle(r1, r2)`: Checks for collisions between two rectangular objects.
+- `randomInt(min, max)`: Generates a random integer between `min` and `max`.
+- `keyboard(keyCode)`: Sets up keyboard event listeners for a given key code.
+- `addExplosionFrames()` and `addLightSpeedFrames()`: Populate arrays with URLs for frame-by-frame animations.
+- AJAX Functions (`createCORSRequest` and `sendData`): Enable communication with a backend server to send and receive game data.
+- `getHC()`: Retrieves high score data or performs other initial data requests from the server.
