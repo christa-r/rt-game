@@ -37,6 +37,7 @@ Heroku will send you a verification email. Click the verification link to activa
   Download the installer from the Heroku CLI download page (https://devcenter.heroku.com/articles/heroku-cli) and run it.
 - For macOS:
   If you have Homebrew installed, open Terminal and run:
+  
  ` brew tap heroku/brew && brew install heroku`
 - For Linux:
   Follow the installation instructions for your Linux distribution on the Heroku      CLI documentation page (https://devcenter.heroku.com/articles/heroku-cli#install-for-linux).
@@ -45,13 +46,30 @@ Heroku will send you a verification email. Click the verification link to activa
 
 Open your terminal (or Command Prompt on Windows) and run:
 
-`heroku --version`
+  `heroku --version`
 
 You should see output with the Heroku CLI version, confirming that it is installed.
 
 ## **Download or Clone the Game Repository**
-1. Clone Using Git:
-- Open your terminal (Command Prompt on Windows, Terminal on macOS/Linux).
-- Navigate to the folder where you want to store the project.
-- Run the command (replace the URL with your repository’s URL):
-`git clone https://github.com/your-username/pixi-game.git`
+**1. Open your terminal** (Command Prompt on Windows, Terminal on macOS/Linux).
+
+**2. Log into Heroku:**
+
+`heroku login`
+
+Follow the prompts in your browser to complete the login.
+
+**3. Clone the Repository:**
+
+`heroku git:clone -a coindm
+cd coindm`
+
+This command creates a new folder named coindm and places the source code there.
+
+**3. Deploy Your Changes**
+
+`git add .`
+
+`git commit -am "make it better"`
+
+`git push heroku main`
