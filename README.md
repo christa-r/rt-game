@@ -36,14 +36,14 @@ Heroku will send you a verification email. Click the verification link to activa
 ### **Install the Heroku CLI**
 **1. Download the CLI:**
 - **For Windows:**
-  Download the installer from the Heroku CLI download page (https://devcenter.heroku.com/articles/heroku-cli) and run it.
+  Download the installer from the [Heroku CLI download page](https://devcenter.heroku.com/articles/heroku-cli) and run it.
 - **For macOS:**
   If you have Homebrew installed, open Terminal and run:
 ```bash
 brew tap heroku/brew && brew install heroku
 ```
 - **For Linux:**
-  Follow the installation instructions for your Linux distribution on the Heroku      CLI documentation page (https://devcenter.heroku.com/articles/heroku-cli#install-for-linux).
+  Follow the installation instructions for your Linux distribution on the [Heroku CLI documentation page](https://devcenter.heroku.com/articles/heroku-cli#install-for-linux).
 
 **2. Verify the Installation:**
 
