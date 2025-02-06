@@ -11,7 +11,7 @@ Click on the **Sign up** button and follow the on-screen instructions. You will 
 GitHub will send you a verification email. Click the link in that email to verify your account.
 
 ## **Create a MongoDB Account**
-MongoDB is a popular NoSQL database, and MongoDB Atlas offers a free cloud-hosted database service. MongoDB is where data from the website app hosted on Heroku is stored.
+MongoDB is a popular NoSQL database, and MongoDB Atlas offers a free cloud-hosted database service. MongoDB is where data from the website app (game) hosted on Heroku is stored.
 
 **1. Visit MongoDB Atlas:**
 Go to https://www.mongodb.com/cloud/atlas.
