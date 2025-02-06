@@ -211,18 +211,12 @@ addLightSpeedFrames(); // Populate lightspeed frame URLs
 
 **Lines 85–120: Global Variables and Input Setup**
 
-Declares many global variables that will be used across different parts of the game.
-- Variables like `hero,` `aliens,` and `spaceBackground` will hold PIXI sprites and containers.
-The `keyboard()` function is called with key codes (65 for A, 68 for D, and 32 for Space) to set up event listeners for user input.
+This section declares global variables that manage game objects and data tracking. Variables like `hero,` `aliens,` and `spaceBackground` will hold PIXI sprites and containers.
 
 ```javascript
 let state, explosion, exit, player,
     door, healthBar, message, scoreMessage, gameOverScene, enemies, id;
 let hero, aliens, spaceBackground, playerBullets, enemyBullets;
-
-let left = keyboard(65); 
-let right = keyboard(68); 
-let spacebar = keyboard(32); 
 ```
 
 **Lines 121–131: User Prompt with SweetAlert**
@@ -312,7 +306,6 @@ Various functions (e.g., `play()`, `trial_init()`, `test_flash()`, `decision()`,
 - `contain(sprite, container)`: Keeps a sprite within the boundaries of a container.
 - `hitTestRectangle(r1, r2)`: Checks for collisions between two rectangular objects.
 - `randomInt(min, max)`: Generates a random integer between `min` and `max`.
-- `keyboard(keyCode)`: Sets up keyboard event listeners for a given key code.
 - `addExplosionFrames()` and `addLightSpeedFrames()`: Populate arrays with URLs for frame-by-frame animations.
 - AJAX Functions (`createCORSRequest` and `sendData`): Enable communication with a backend server to send and receive game data.
 - `getHC()`: Retrieves high score data or performs other initial data requests from the server.
