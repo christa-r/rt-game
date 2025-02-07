@@ -169,16 +169,16 @@ window.onresize = resize;
 - **Lines 49–51:** Initializes empty arrays for explosion and level transition animations. These arrays will later be populated with image URLs used for animated effects.
 
 ```javascript
-var flashStage = new PIXI.Container(); // Container for flashing elements
-var smoothie = new Smoothie({
-  engine: PIXI,
-  renderer: app,
-  root: flashStage,
-  update: gameLoop.bind(this),
-  fps: 50,
-});
-var EXPLOSION_FRAMES = []; // Frames for explosion animation
-var LIGHTSPEED_FRAMES = []; // Frames for level transition animation
+42. var flashStage = new PIXI.Container(); // Container for flashing elements
+43. var smoothie = new Smoothie({
+44.  engine: PIXI,
+45.  renderer: app,
+46.  root: flashStage,
+47.  update: gameLoop.bind(this),
+48.  fps: 50,
+49. });
+50. var EXPLOSION_FRAMES = []; // Frames for explosion animation
+51. var LIGHTSPEED_FRAMES = []; // Frames for level transition animation
 ```
 
 **Lines 71–80: Asset Loading**
@@ -239,52 +239,111 @@ Swal.fire({
 });
 ```
 
-**Lines 134–167: The `setup()` Function**
+**Lines 134–169: The `setup()` Function**
 
 This function is called once all assets are loaded and is responsible for getting the game ready to run. It initializes data, sounds, UI elements, and starts the main loop.
-- **Lines 134–136:** Generates a unique user ID by combining two random base‑36 strings.
-- **Lines 138–141:** Sets up the `jsondata` object with the username, user input, and current time.
-- **Lines 142–155:** Converts the `jsondata` object into a JSON string, sets the server endpoint `(/rt_shank3)`, and creates a CORS-enabled POST request. It verifies that the request is properly created, sets the request header to indicate JSON content, defines callbacks for handling both successful responses and errors, and finally sends the JSON data to the server.
-- **Lines 157–161:** Creates sound objects for positive `(goodsound)` and negative `(badsound)` feedback and initializes counters like `trialCounter` and `DestroyedAlienCounter` to zero.
-- **Lines 162–167:** Adds the `flashStage` to the main stage, sets the initial game state (`getHC`), and starts the Smoothie game loop.
+- **Lines 135–137:** Generates a unique user ID by combining two random base‑36 strings.
+- **Lines 139–142:** Sets up the `jsondata` object with the username, user input, and current time. *This data is used to record the session's start details.*
+- **Lines 144–155:** Converts the `jsondata` object into a JSON string, sets the server endpoint `(/rt_shank3)`, and creates a CORS-enabled POST request. It verifies that the request is properly created, sets the request header to indicate JSON content, defines callbacks for handling both successful responses and errors, and finally sends the JSON data to the server.
+- **Lines 158–162:** Initialize the trial array, create sound objects for positive `(goodsound)` and negative `(badsound)` feedback, and reset counters like `trialCounter` and `DestroyedAlienCounter` to zero.
+- **Lines 163–169:** Adds the `flashStage` to the main stage, sets the initial game state (`getHC`), and starts the Smoothie game loop.
 
 ```javascript
-- function setup() {
-    // Generate a unique user ID
-    user = Math.random().toString(36).substring(2, 7) +
-           Math.random().toString(36).substring(2, 7);
-    
-    // Initialize JSON data with user info and send it to the server
-    jsondata.username = user;
-    jsondata.uid = userinput;
-    jsondata.start_time = Date();
-    var data = JSON.stringify(jsondata);
-    var url = '/rt_shank3';
-    var xhr = createCORSRequest('POST', url);
-    if (!xhr) {
-        throw new Error('CORS not supported');
-    }
-    xhr.setRequestHeader('Content-Type','application/json');
-    xhr.onload = function(){
-        var text = xhr.responseText;
-    };
-    xhr.onerror = function(){
-        alert("Error sending data to server");
-    };
-    xhr.send(data);
-    
-    trialArray = [];
-    goodsound = new sound('spacelaser_trimmed.wav');
-    badsound = new sound('failshoot.wav');
-    trialCounter = 0;
-    DestroyedAlienCounter = 0;
-    app.stage.addChild(flashStage);
-    
-    // (Additional initialization for sprites, event listeners, and UI elements goes here.)
-    
-    state = getHC;
-    smoothie.start();
-}
+134. - function setup() {
+135.    // Generate a unique user ID
+136.    user = Math.random().toString(36).substring(2, 7) +
+137.           Math.random().toString(36).substring(2, 7);
+138.   
+139.    // Initialize JSON data with user info and send it to the server
+140.    jsondata.username = user;
+141.    jsondata.uid = userinput;
+142.    jsondata.start_time = Date();
+143.    var data = JSON.stringify(jsondata);
+144.    var url = '/rt_shank3';
+145.    var xhr = createCORSRequest('POST', url);
+146.    if (!xhr) {
+147.        throw new Error('CORS not supported');
+148.    }
+149.    xhr.setRequestHeader('Content-Type','application/json');
+150.    xhr.onload = function(){
+151.        var text = xhr.responseText;
+152.    };
+153.    xhr.onerror = function(){
+154.        alert("Error sending data to server");
+155.    };
+156.    xhr.send(data);
+157.    
+158.    trialArray = [];
+159.    goodsound = new sound('spacelaser_trimmed.wav');
+160.    badsound = new sound('failshoot.wav');
+161.    trialCounter = 0;
+162.    DestroyedAlienCounter = 0;
+163.    app.stage.addChild(flashStage);
+164.    
+165.    // (Additional initialization for sprites, event listeners, and UI elements goes here.)
+166.    
+167.    state = getHC;
+168.    smoothie.start();
+169. }
+```
+
+**Lines 300–330: Packaging and Sending Data (sendData Function)**
+
+This block of code gathers trial data, packages it into a JSON object, and sends it to the server via a CORS-enabled PUT request. The data is only sent after certain trial thresholds (e.g., 25, 50, etc.) to avoid sending data on every trial.
+
+- **Lines 300–302:** The current trial's data is added to an array (`trialArray`) that holds all the trial data.
+- **Lines 305–307:** The code checks if the trial counter has reached a threshold (e.g., 25, 50, 75, etc.). Data is sent only at these intervals to avoid excessive requests.
+- **Lines 310–312:** The `jsondata` object is updated with the user input (`userinput`) and the session's trial data (`trialArray`). It is then converted into a JSON string using `JSON.stringify`.
+- **Lines 313–317:** The server endpoint (`/rt_shank3`) is defined, and a CORS-enabled PUT request is created using `createCORSRequest`. If the request creation fails, an error is thrown.
+- **Lines 318:** The request header is set to `application/json` to inform the server of the data format.
+- **Lines 319–324:** Callback functions are defined:
+  - **onload:** Handles a successful response from the server.
+  - **onerror:** Alerts the user if there is an error with the request.
+- **Line 325:** The JSON data is sent to the server.
+- **Lines 327–329:** The trial object is reset to prepare for the next trial.
+- **Lines 331–336:** The game state is updated:
+  -  If the trial counter reaches 200, the game moves to a state to fetch or display the high score (`getHighScore`).
+  -  Otherwise, the game continues in the play state (`play`).
+
+```javascript
+300. function sendData(){
+301.     // Add the current trial data to the trialArray
+302.     trialArray.push(trial);
+303.     
+304.     // Check if it's time to send data (e.g., after 25 trials)
+305.     if (trialCounter == 25 || trialCounter == 50 || trialCounter == 75 ||
+306.         trialCounter == 100 || trialCounter == 125 || trialCounter == 150 ||
+307.         trialCounter == 175 || trialCounter == 200) {
+308.         
+309.         // Update jsondata with the user input and the session's trial data
+310.         jsondata.uid = userinput;
+311.         jsondata.session = trialArray;
+312.         var data = JSON.stringify(jsondata);
+313.         var url = '/rt_shank3';
+314.         var xhr = createCORSRequest('PUT', url);
+315.         if (!xhr){
+316.             throw new Error('CORS not supported');
+317.         }
+318.         xhr.setRequestHeader('Content-Type','application/json');
+319.         xhr.onload = function(){
+320.             var text = xhr.responseText;
+321.         };
+322.         xhr.onerror = function(){
+323.             alert('Error making the request.');
+324.         };
+325.         xhr.send(data);
+326.     }
+327.     
+328.     // Reset the trial object for the next trial
+329.     trial = new Object();
+330.     
+331.     // Decide next state: if all trials are done, move to getHighScore; otherwise, continue playing.
+332.     if (trialCounter == 200){
+333.         state = getHighScore;
+334.     } else {
+335.         state = play;
+336.     }
+337. }
 ```
 
 **Game Loop Overview**
